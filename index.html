@@ -23,6 +23,7 @@
     <a class="brand" href="#top">WP Bundle Migrator</a>
     <nav class="nav-links" aria-label="Main">
       <a href="#problems">Why it works</a>
+      <a href="#modules">Built-in modules</a>
       <a href="#cli">WP-CLI</a>
       <a href="#beta">Try the beta</a>
       <a class="nav-gh" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">GitHub</a>
@@ -145,7 +146,45 @@
   </div>
 </section>
 
-<section class="section" id="cli">
+<section class="section" id="modules">
+  <div class="wrap">
+    <h2>One plugin, no add-on ZIPs</h2>
+    <p class="section-lead">Cloud storage, scheduling, encryption and direct transfers are built into the core plugin. You switch each one on from the settings screen, so there are no extra plugin files to upload or keep in step with core updates.</p>
+
+    <ul class="modules">
+      <li>
+        <h3>Cloud storage</h3>
+        <div>
+          <p>Send backups straight to S3-compatible storage (Amazon S3, Cloudflare R2, Google Cloud, Wasabi, MinIO), Dropbox, OneDrive or SFTP. You bring your own storage credentials.</p>
+          <p class="detail">A small built-in SigV4 signer replaces the AWS SDK, and multipart uploads keep memory low.</p>
+        </div>
+      </li>
+      <li>
+        <h3>Scheduled backups</h3>
+        <div>
+          <p>Automatic backups with grandfather-father-son retention: 7 daily, 4 weekly and 12 monthly copies. A disk quota limit stops backups from filling the host.</p>
+          <p class="detail">Runs on Action Scheduler, prunes old local and cloud copies, and sends Slack, Discord or email alerts.</p>
+        </div>
+      </li>
+      <li>
+        <h3>Server-to-server transfer</h3>
+        <div>
+          <p>Pair two sites with a one-time 32-character token and move the site directly between them, without downloading a large archive to your computer.</p>
+          <p class="detail">Data streams in chunks over an encrypted REST connection, and the domain is rewritten on arrival.</p>
+        </div>
+      </li>
+      <li>
+        <h3>Encrypted archives</h3>
+        <div>
+          <p>Protect backups with AES-256-GCM. The authentication tag detects any change to an archive, so a tampered file fails to restore instead of loading.</p>
+          <p class="detail">Keys come from your passphrase through PBKDF2 with 100,000 iterations, using PHP’s built-in OpenSSL.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section-tint" id="cli">
   <div class="wrap cli-grid">
     <div>
       <h2>Automate it with WP-CLI</h2>
@@ -170,7 +209,7 @@ wp bundle import backup.bundle.zip \
   </div>
 </section>
 
-<section class="section section-tint" id="beta">
+<section class="section" id="beta">
   <div class="wrap beta-grid">
     <div>
       <h2>Help test the beta</h2>
