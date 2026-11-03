@@ -109,6 +109,12 @@ h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 700; margin-bottom: 0
 .also dt { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.3rem; }
 .also dd { margin: 0; color: var(--ink-soft); font-size: 0.98rem; }
 
+/* Built-in modules */
+.modules { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.modules li { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+.modules h3 { font-size: 1.2rem; }
+.modules .detail { color: var(--ink-soft); font-size: 0.95rem; margin-top: 0.5rem; }
+
 /* CLI */
 .cli-grid, .beta-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
 .term { background: var(--term); border-radius: 14px; overflow: hidden; box-shadow: 0 18px 40px -22px rgba(14, 27, 44, 0.6); }
@@ -136,5 +142,6 @@ h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 700; margin-bottom: 0
   .hero-grid, .cli-grid, .beta-grid { grid-template-columns: 1fr; }
   .rows li { grid-template-columns: 1fr; gap: 1rem; }
   .also { grid-template-columns: 1fr; }
+  .modules li { grid-template-columns: 1fr; gap: 0.5rem; }
   .nav-links a:not(.nav-gh) { display: none; }
 }
