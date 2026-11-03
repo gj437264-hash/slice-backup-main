@@ -23,7 +23,7 @@
     <a class="brand" href="#top">WP Bundle Migrator</a>
     <nav class="nav-links" aria-label="Main">
       <a href="#problems">Why it works</a>
-      <a href="#modules">Built-in modules</a>
+      <a href="#modules">Roadmap</a>
       <a href="#cli">WP-CLI</a>
       <a href="#beta">Try the beta</a>
       <a class="nav-gh" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">GitHub</a>
@@ -140,7 +140,15 @@
       </div>
       <div>
         <dt>Flexible export scopes</dt>
-        <dd>Full site, database only, or a turnkey bare-metal clone that includes WordPress core.</dd>
+        <dd>Standard migration, complete turnkey clone with WordPress core, database only, media only, or a granular selection.</dd>
+      </div>
+      <div>
+        <dt>Hooks for developers</dt>
+        <dd>Tune the database chunk size with the <code>wp_bundle_migrator_chunk_size</code> filter, or run your own code after a restore with the <code>wp_bundle_migrator_after_restore</code> action.</dd>
+      </div>
+      <div>
+        <dt>Clean uninstall</dt>
+        <dd>Deleting the plugin removes its settings, options and temporary migration folders.</dd>
       </div>
     </dl>
   </div>
@@ -148,8 +156,8 @@
 
 <section class="section" id="modules">
   <div class="wrap">
-    <h2>One plugin, no add-on ZIPs</h2>
-    <p class="section-lead">Cloud storage, scheduling, encryption and direct transfers are built into the core plugin. You switch each one on from the settings screen, so there are no extra plugin files to upload or keep in step with core updates.</p>
+    <h2>Planned for later releases</h2>
+    <p class="section-lead">Version 1.0.0 covers migration, backup and restore. These modules are planned and are not in the current release. The plan is to build them into the core plugin, so there will be no add-on ZIPs to install or keep in step with updates.</p>
 
     <ul class="modules">
       <li>
@@ -201,10 +209,17 @@ wp bundle export --scope=turnkey_full --output=/var/backups/site-clone.zip
 <span class="c"># Pull subsite #3 out of a network as a standalone site</span>
 wp bundle export --multisite-mode=subsite --subsite-id=3 --convert-standalone
 
+<span class="c"># Export the database only</span>
+wp bundle export --scope=db_only
+
 <span class="c"># Restore and swap the domain</span>
 wp bundle import backup.bundle.zip \
   --old-url="https://dev.local" \
-  --new-url="https://production.com"</code></pre>
+  --new-url="https://production.com"
+
+<span class="c"># List and delete archives in the local vault</span>
+wp bundle list
+wp bundle delete backup.bundle.zip</code></pre>
     </div>
   </div>
 </section>
@@ -220,7 +235,7 @@ wp bundle import backup.bundle.zip \
     </div>
     <ol class="steps">
       <li><span>Download the <code>.zip</code> from the <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">latest release</a>.</span></li>
-      <li><span>Upload and activate it on a test site, such as LocalWP or a staging server.</span></li>
+      <li><span>Upload and activate it on a test site, such as LocalWP or a staging server, then open <strong>Tools &gt; WP Bundle Migrator</strong>.</span></li>
       <li><span>Export the site, then import the archive on a fresh WordPress install with a different URL.</span></li>
       <li><span>Report bugs, memory spikes or failed restores in <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">GitHub Issues</a>. Include your PHP version and host.</span></li>
     </ol>
