@@ -1,18 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WordPress Migration Plugin Architect</title>
-    <meta name="description" content="Production-grade WordPress migration engine: Full lifecycle through Phase 6 Security Audit &amp; Production Hardening (PHPStan Level 8, WPCS compliance, threat modeling, developer hooks API, and release packaging)." />
-    <meta property="og:title" content="WordPress Migration Plugin Architect" />
-    <meta property="og:description" content="Production-grade WordPress migration engine: Full lifecycle through Phase 6 Security Audit &amp; Production Hardening (PHPStan Level 8, WPCS compliance, threat modeling, developer hooks API, and release packaging)." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WP Backup & Migration Plugin | High-Performance WordPress Backups</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">WP Migration Engine</a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#beta">Beta Testing</a>
+        <a href="#docs">Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="badge">Open Source • Pre-Directory Beta</span>
+      <h1>Fast, Reliable WordPress Backup & Migration</h1>
+      <p>Streamlined site export, import, and zero-downtime database migrations. Built to handle low-memory limits and large site archives seamlessly.</p>
+      
+      <div class="cta-group">
+        <a href="https://github.com/YOUR_USERNAME/YOUR_REPO/releases/latest" class="btn btn-primary" target="_blank">Download Latest Zip</a>
+        <a href="https://github.com/YOUR_USERNAME/YOUR_REPO" class="btn btn-secondary" target="_blank">View GitHub Repo</a>
+      </div>
+      
+      <div class="disclaimer-box">
+        <strong>⚠️ Pre-Submission Beta Notice:</strong> Please test this plugin on non-production staging or local development environments first and report bugs via GitHub Issues.
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Full & Partial Backups</h3>
+          <p>Export database tables, plugins, themes, and uploads together or independently into lightweight, compressed archives.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Chunked Data Processing</h3>
+          <p>Avoid server timeouts and memory exhaustion on shared hosts or strict edge proxies during large site migrations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Database Serialization Clean</h3>
+          <p>Automatically handles search-and-replace for domain URLs while preserving serialized PHP data arrays and structures intact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="beta" class="beta-section">
+    <div class="container">
+      <h2>How to Test & Contribute</h2>
+      <ol class="steps-list">
+        <li>Download the compiled <code>.zip</code> package from the latest <a href="https://github.com/YOUR_USERNAME/YOUR_REPO/releases" target="_blank">Releases tab</a>.</li>
+        <li>Upload and activate the zip file on a test or staging WordPress site (LocalWP, staging server, or dev sandbox).</li>
+        <li>Run a test backup, export the site, and attempt an import/migration on a fresh WordPress setup.</li>
+        <li>Report bugs, memory leaks, or execution failures under <a href="https://github.com/YOUR_USERNAME/YOUR_REPO/issues" target="_blank">GitHub Issues</a>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; Open Source Project. Released under the GPLv2 or later license.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
