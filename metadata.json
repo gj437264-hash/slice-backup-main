@@ -1,0 +1,6 @@
+{
+  "name": "WordPress Migration Plugin Architect",
+  "description": "Production-grade WordPress migration engine: Full lifecycle through Phase 6 Security Audit & Production Hardening (PHPStan Level 8, WPCS compliance, threat modeling, developer hooks API, and release packaging).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
