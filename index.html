@@ -3,16 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WP Bundle Migrator: WordPress backup and migration that doesn’t run out of memory</title>
-  <meta name="description" content="Open-source WordPress backup, restore and migration plugin. Streams data in 2 MB slices, rewrites URLs without unserialize(), and keeps sites from crashing on PHP version changes.">
-  <meta property="og:title" content="WP Bundle Migrator">
+  <title>WP Bundle Migrator: WordPress Backup, Restore and Migration Plugin</title>
+  <meta name="description" content="Free, open-source WordPress backup, restore and migration plugin. Streams data in 2 MB slices so large sites move without memory errors, with safe URL replacement and resumable downloads.">
+  <meta property="og:title" content="WP Bundle Migrator: WordPress backup and migration without memory errors">
   <meta property="og:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="WP Bundle Migrator">
+  <meta name="twitter:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
+  <meta name="theme-color" content="#2f5bea">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232F5BEA'/><path d='M22 40h56M22 60h56' stroke='white' stroke-width='9' stroke-linecap='round'/></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "WP Bundle Migrator",
+    "description": "Open-source WordPress backup, restore and migration plugin that streams data in 2 MB slices.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "WordPress 5.8 to 6.7, PHP 7.4 to 8.4",
+    "softwareVersion": "1.0.0",
+    "license": "https://www.gnu.org/licenses/gpl-2.0.html",
+    "isAccessibleForFree": true,
+    "downloadUrl": "https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest"
+  }
+  </script>
 </head>
 <body>
 
@@ -23,9 +38,10 @@
     <a class="brand" href="#top">WP Bundle Migrator</a>
     <nav class="nav-links" aria-label="Main">
       <a href="#problems">Why it works</a>
+      <a href="#features">Features</a>
       <a href="#modules">Roadmap</a>
       <a href="#cli">WP-CLI</a>
-      <a href="#beta">Try the beta</a>
+      <a href="#get-started">Get started</a>
       <a class="nav-gh" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">GitHub</a>
     </nav>
   </div>
@@ -36,17 +52,16 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <h1>Move big WordPress sites without hitting the memory limit.</h1>
+      <h1>Back up and move big WordPress sites without hitting the memory limit</h1>
       <p class="lead">WP Bundle Migrator backs up, restores and migrates WordPress by streaming everything in small slices. Memory use stays flat whether the site is 50 MB or 100 GB.</p>
       <div class="actions">
         <a class="btn btn-primary" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
         <a class="btn btn-ghost" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">View on GitHub</a>
       </div>
-      <p class="meta">Free and open source under GPL v2 or later. Works with WordPress 5.8 to 6.7 and PHP 7.4 to 8.4.</p>
     </div>
 
     <figure class="chart" aria-labelledby="chart-cap">
-      <svg viewBox="0 0 520 340" role="img" aria-label="Chart: a typical plugin’s PHP memory climbs with site size until it hits the memory limit and crashes, while WP Bundle Migrator stays flat at about 12 MB.">
+      <svg viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Chart: a typical plugin’s PHP memory climbs with site size until it hits the memory limit and crashes, while WP Bundle Migrator stays flat at about 12 MB.">
         <g class="grid">
           <line x1="50" y1="30" x2="50" y2="290"/>
           <line x1="50" y1="290" x2="500" y2="290"/>
@@ -70,87 +85,76 @@
       <figcaption id="chart-cap">Illustration of the design goal. The flat figure is the project’s measured footprint.</figcaption>
     </figure>
   </div>
+
+  <div class="wrap">
+    <ul class="facts">
+      <li><strong>2 MB</strong> streaming slices</li>
+      <li><strong>About 12 MB</strong> flat memory use</li>
+      <li><strong>WordPress 5.8 to 6.7</strong></li>
+      <li><strong>PHP 7.4 to 8.4</strong></li>
+      <li><strong>GPL v2 or later</strong> free and open source</li>
+    </ul>
+  </div>
 </section>
 
 <section class="section" id="problems">
   <div class="wrap">
     <h2>Built around the four things that break migrations</h2>
     <p class="section-lead">Most failures come from the same few causes. Each one is handled in the design, not patched afterward.</p>
-
-    <ul class="rows">
-      <li>
-        <div class="row-problem">
-          <h3>The server runs out of memory</h3>
-          <p>Plugins that load a whole archive or table into RAM crash on shared hosting.</p>
-        </div>
-        <div class="row-fix">
-          <h4>Streams in 2 MB slices</h4>
-          <p>Files and database rows move through file handles and HTTP sockets in fixed-size pieces, so memory use does not grow with the site.</p>
-        </div>
-      </li>
-      <li>
-        <div class="row-problem">
-          <h3>Changing the domain corrupts data</h3>
-          <p>Plain search-and-replace breaks serialized PHP strings, and unserializing them to fix it can run attacker-supplied code.</p>
-        </div>
-        <div class="row-fix">
-          <h4>Rewrites URLs without <code>unserialize()</code></h4>
-          <p>A tokenizer recalculates string lengths, including multi-byte UTF-8 and emoji, and never executes site data. This closes the object injection risk (CWE-502).</p>
-        </div>
-      </li>
-      <li>
-        <div class="row-problem">
-          <h3>The new server has a newer PHP</h3>
-          <p>Moving from PHP 7.4 to 8.2 or later can crash the site on old plugin code.</p>
-        </div>
-        <div class="row-fix">
-          <h4>Checks plugins before the site boots</h4>
-          <p>The compatibility inspector scans plugin code against the destination’s PHP version, deactivates any plugin with fatal syntax in the database, keeps its files, and writes a conflict report. You get a working site and a list of what to fix.</p>
-        </div>
-      </li>
-      <li>
-        <div class="row-problem">
-          <h3>Timeouts and half-finished downloads</h3>
-          <p>Gateways cut long requests, and big downloads fail with “File incomplete”.</p>
-        </div>
-        <div class="row-fix">
-          <h4>Resumable downloads with HTTP Range</h4>
-          <p>Archives of 5 GB and more can be paused, resumed or fetched with a download manager, and output buffers are cleared so the server does not run out of memory while sending.</p>
-        </div>
-      </li>
-    </ul>
+    <div class="cards cards-2">
+      <article class="card">
+        <h3>The server runs out of memory</h3>
+        <p class="problem">Plugins that load a whole archive or table into RAM crash on shared hosting.</p>
+        <p class="fix"><strong>Streams in 2 MB slices.</strong> Files and database rows move through file handles and HTTP sockets in fixed-size pieces, so memory use does not grow with the site.</p>
+      </article>
+      <article class="card">
+        <h3>Changing the domain corrupts data</h3>
+        <p class="problem">Plain search-and-replace breaks serialized PHP strings, and unserializing them to fix it can run attacker-supplied code.</p>
+        <p class="fix"><strong>Rewrites URLs without <code>unserialize()</code>.</strong> A tokenizer recalculates string lengths, including multi-byte UTF-8 and emoji, and never executes site data. This closes the object injection risk (CWE-502).</p>
+      </article>
+      <article class="card">
+        <h3>The new server has a newer PHP</h3>
+        <p class="problem">Moving from PHP 7.4 to 8.2 or later can crash the site on old plugin code.</p>
+        <p class="fix"><strong>Checks plugins before the site boots.</strong> The compatibility inspector scans plugin code against the destination’s PHP version, deactivates any plugin with fatal syntax in the database, keeps its files, and writes a conflict report. You get a working site and a list of what to fix.</p>
+      </article>
+      <article class="card">
+        <h3>Timeouts and half-finished downloads</h3>
+        <p class="problem">Gateways cut long requests, and big downloads fail with “File incomplete”.</p>
+        <p class="fix"><strong>Resumable downloads with HTTP Range.</strong> Archives of 5 GB and more can be paused, resumed or fetched with a download manager, and output buffers are cleared so the server does not run out of memory while sending.</p>
+      </article>
+    </div>
   </div>
 </section>
 
-<section class="section section-tint">
+<section class="section section-tint" id="features">
   <div class="wrap">
-    <h2>Also included</h2>
-    <dl class="also">
-      <div>
-        <dt>Multisite support</dt>
-        <dd>Migrate a whole network, or pull one subsite out as a standalone install with table prefixes rewritten for you (<code>wp_3_</code> becomes <code>wp_</code>).</dd>
-      </div>
-      <div>
-        <dt>Restores that keep going</dt>
-        <dd>If an archive has a damaged entry, the extractor logs a warning, skips it, and restores everything else.</dd>
-      </div>
-      <div>
-        <dt>Hardened extraction</dt>
-        <dd>Every path is checked against a canonical jail on Linux and Windows, which blocks Zip Slip (CWE-22).</dd>
-      </div>
-      <div>
-        <dt>Flexible export scopes</dt>
-        <dd>Standard migration, complete turnkey clone with WordPress core, database only, media only, or a granular selection.</dd>
-      </div>
-      <div>
-        <dt>Hooks for developers</dt>
-        <dd>Tune the database chunk size with the <code>wp_bundle_migrator_chunk_size</code> filter, or run your own code after a restore with the <code>wp_bundle_migrator_after_restore</code> action.</dd>
-      </div>
-      <div>
-        <dt>Clean uninstall</dt>
-        <dd>Deleting the plugin removes its settings, options and temporary migration folders.</dd>
-      </div>
-    </dl>
+    <h2>Everything else you need for a safe move</h2>
+    <div class="cards cards-3">
+      <article class="card">
+        <h3>Multisite support</h3>
+        <p>Migrate a whole network, or pull one subsite out as a standalone install with table prefixes rewritten for you (<code>wp_3_</code> becomes <code>wp_</code>).</p>
+      </article>
+      <article class="card">
+        <h3>Restores that keep going</h3>
+        <p>If an archive has a damaged entry, the extractor logs a warning, skips it, and restores everything else.</p>
+      </article>
+      <article class="card">
+        <h3>Hardened extraction</h3>
+        <p>Every path is checked against a canonical jail on Linux and Windows, which blocks Zip Slip (CWE-22).</p>
+      </article>
+      <article class="card">
+        <h3>Flexible export scopes</h3>
+        <p>Standard migration, complete turnkey clone with WordPress core, database only, media only, or a granular selection.</p>
+      </article>
+      <article class="card">
+        <h3>Hooks for developers</h3>
+        <p>Tune the database chunk size with the <code>wp_bundle_migrator_chunk_size</code> filter, or run your own code after a restore with the <code>wp_bundle_migrator_after_restore</code> action.</p>
+      </article>
+      <article class="card">
+        <h3>Clean uninstall</h3>
+        <p>Deleting the plugin removes its settings, options and temporary migration folders.</p>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -158,37 +162,28 @@
   <div class="wrap">
     <h2>Planned for later releases</h2>
     <p class="section-lead">Version 1.0.0 covers migration, backup and restore. These modules are planned and are not in the current release. The plan is to build them into the core plugin, so there will be no add-on ZIPs to install or keep in step with updates.</p>
-
-    <ul class="modules">
-      <li>
+    <div class="cards cards-2">
+      <article class="card card-plan">
         <h3>Cloud storage</h3>
-        <div>
-          <p>Send backups straight to S3-compatible storage (Amazon S3, Cloudflare R2, Google Cloud, Wasabi, MinIO), Dropbox, OneDrive or SFTP. You bring your own storage credentials.</p>
-          <p class="detail">A small built-in SigV4 signer replaces the AWS SDK, and multipart uploads keep memory low.</p>
-        </div>
-      </li>
-      <li>
+        <p>Send backups straight to S3-compatible storage (Amazon S3, Cloudflare R2, Google Cloud, Wasabi, MinIO), Dropbox, OneDrive or SFTP. You bring your own storage credentials.</p>
+        <p class="detail">A small built-in SigV4 signer replaces the AWS SDK, and multipart uploads keep memory low.</p>
+      </article>
+      <article class="card card-plan">
         <h3>Scheduled backups</h3>
-        <div>
-          <p>Automatic backups with grandfather-father-son retention: 7 daily, 4 weekly and 12 monthly copies. A disk quota limit stops backups from filling the host.</p>
-          <p class="detail">Runs on Action Scheduler, prunes old local and cloud copies, and sends Slack, Discord or email alerts.</p>
-        </div>
-      </li>
-      <li>
+        <p>Automatic backups with grandfather-father-son retention: 7 daily, 4 weekly and 12 monthly copies. A disk quota limit stops backups from filling the host.</p>
+        <p class="detail">Runs on Action Scheduler, prunes old local and cloud copies, and sends Slack, Discord or email alerts.</p>
+      </article>
+      <article class="card card-plan">
         <h3>Server-to-server transfer</h3>
-        <div>
-          <p>Pair two sites with a one-time 32-character token and move the site directly between them, without downloading a large archive to your computer.</p>
-          <p class="detail">Data streams in chunks over an encrypted REST connection, and the domain is rewritten on arrival.</p>
-        </div>
-      </li>
-      <li>
+        <p>Pair two sites with a one-time 32-character token and move the site directly between them, without downloading a large archive to your computer.</p>
+        <p class="detail">Data streams in chunks over an encrypted REST connection, and the domain is rewritten on arrival.</p>
+      </article>
+      <article class="card card-plan">
         <h3>Encrypted archives</h3>
-        <div>
-          <p>Protect backups with AES-256-GCM. The authentication tag detects any change to an archive, so a tampered file fails to restore instead of loading.</p>
-          <p class="detail">Keys come from your passphrase through PBKDF2 with 100,000 iterations, using PHP’s built-in OpenSSL.</p>
-        </div>
-      </li>
-    </ul>
+        <p>Protect backups with AES-256-GCM. The authentication tag detects any change to an archive, so a tampered file fails to restore instead of loading.</p>
+        <p class="detail">Keys come from your passphrase through PBKDF2 with 100,000 iterations, using PHP’s built-in OpenSSL.</p>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -199,8 +194,8 @@
       <p class="section-lead">Run exports and restores from a terminal, a CI job or a headless server. Replace the domain during import in the same command.</p>
     </div>
     <div class="term" role="group" aria-label="WP-CLI examples">
-      <div class="term-bar"><span></span><span></span><span></span></div>
-<pre><code><span class="c"># Export the whole site</span>
+      <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+<pre tabindex="0"><code><span class="c"># Export the whole site</span>
 wp bundle export --scope=full
 
 <span class="c"># Turnkey clone with WordPress core and database</span>
@@ -224,21 +219,20 @@ wp bundle delete backup.bundle.zip</code></pre>
   </div>
 </section>
 
-<section class="section" id="beta">
-  <div class="wrap beta-grid">
-    <div>
-      <h2>Help test the beta</h2>
-      <p class="section-lead">The plugin is not in the WordPress.org directory yet. Try it on a staging or local site first, not on a live one.</p>
-      <div class="notice" role="note">
-        <strong>Before you start:</strong> take a separate backup of any site you test on, and report problems on GitHub Issues.
-      </div>
-    </div>
+<section class="section" id="get-started">
+  <div class="wrap">
+    <h2>Get started in four steps</h2>
     <ol class="steps">
       <li><span>Download the <code>.zip</code> from the <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">latest release</a>.</span></li>
-      <li><span>Upload and activate it on a test site, such as LocalWP or a staging server, then open <strong>Tools &gt; WP Bundle Migrator</strong>.</span></li>
+      <li><span>Upload and activate it in WordPress, then open <strong>Tools &gt; WP Bundle Migrator</strong>.</span></li>
       <li><span>Export the site, then import the archive on a fresh WordPress install with a different URL.</span></li>
-      <li><span>Report bugs, memory spikes or failed restores in <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">GitHub Issues</a>. Include your PHP version and host.</span></li>
+      <li><span>Hit a bug, memory spike or failed restore? Report it in <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">GitHub Issues</a> with your PHP version and host.</span></li>
     </ol>
+    <div class="notice" role="note"><strong>Good practice:</strong> keep a separate backup of any site before you migrate or restore, and try a new setup on staging first.</div>
+    <div class="cta-band">
+      <h3>Ready to move your site?</h3>
+      <a class="btn btn-light" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
+    </div>
   </div>
 </section>
 
