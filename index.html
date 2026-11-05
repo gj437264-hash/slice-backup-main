@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WP Bundle Migrator: WordPress Backup, Restore and Migration Plugin</title>
+  <title>Slice Backup: WordPress Backup, Restore and Migration Plugin</title>
   <meta name="description" content="Free, open-source WordPress backup, restore and migration plugin. Streams data in 2 MB slices so large sites move without memory errors, with safe URL replacement, resumable downloads, cloud storage, scheduled backups and encryption.">
-  <meta property="og:title" content="WP Bundle Migrator: WordPress backup and migration without memory errors">
+  <meta property="og:title" content="Slice Backup: WordPress backup and migration without memory errors">
   <meta property="og:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="WP Bundle Migrator">
+  <meta name="twitter:title" content="Slice Backup">
   <meta name="twitter:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
   <meta name="theme-color" content="#2f5bea">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232F5BEA'/><path d='M22 40h56M22 60h56' stroke='white' stroke-width='9' stroke-linecap='round'/></svg>">
@@ -18,13 +18,13 @@
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "WP Bundle Migrator",
+    "name": "Slice Backup",
     "description": "Open-source WordPress backup, restore and migration plugin that streams data in 2 MB slices.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "WordPress 5.8 to 6.7, PHP 7.4 to 8.4",
     "license": "https://www.gnu.org/licenses/gpl-2.0.html",
     "isAccessibleForFree": true,
-    "downloadUrl": "https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest"
+    "downloadUrl": "https://github.com/gj437264-hash/slice-backup/archive/refs/heads/main.zip"
   }
   </script>
 </head>
@@ -35,14 +35,14 @@
 
 <header class="nav">
   <div class="wrap nav-row">
-    <a class="brand" href="#top">WP Bundle Migrator</a>
+    <a class="brand" href="#top">Slice Backup</a>
     <nav class="nav-links" aria-label="Main">
       <a href="#problems">Why it works</a>
       <a href="#features">Features</a>
       <a href="#modules">Modules</a>
       <a href="#cli">WP-CLI</a>
       <a href="#get-started">Get started</a>
-      <a class="nav-gh" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">GitHub</a>
+      <a class="nav-gh" href="https://github.com/gj437264-hash/slice-backup">GitHub</a>
     </nav>
   </div>
 </header>
@@ -53,15 +53,15 @@
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1>Back up and move big WordPress sites without hitting the memory limit</h1>
-      <p class="lead">WP Bundle Migrator backs up, restores and migrates WordPress by streaming everything in small slices. Memory use stays flat whether the site is 50 MB or 100 GB.</p>
+      <p class="lead">Slice Backup backs up, restores and migrates WordPress by streaming everything in small slices. Memory use stays flat whether the site is 50 MB or 100 GB.</p>
       <div class="actions">
-        <a class="btn btn-primary" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
-        <a class="btn btn-ghost" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">View on GitHub</a>
+        <a class="btn btn-primary" href="https://github.com/gj437264-hash/slice-backup/archive/refs/heads/main.zip">Download plugin (.zip)</a>
+        <a class="btn btn-ghost" href="https://github.com/gj437264-hash/slice-backup">View on GitHub</a>
       </div>
     </div>
 
     <figure class="chart" aria-labelledby="chart-cap">
-      <svg viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Chart: a typical plugin’s PHP memory climbs with site size until it hits the memory limit and crashes, while WP Bundle Migrator stays flat at about 12 MB.">
+      <svg viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Chart: a typical plugin’s PHP memory climbs with site size until it hits the memory limit and crashes, while Slice Backup stays flat at about 12 MB.">
         <g class="grid">
           <line x1="50" y1="30" x2="50" y2="290"/>
           <line x1="50" y1="290" x2="500" y2="290"/>
@@ -73,7 +73,7 @@
         <text class="t-bad" x="318" y="108" text-anchor="end">Buffers data in memory:</text>
         <text class="t-bad" x="318" y="124" text-anchor="end">“Allowed memory size exhausted”</text>
         <line class="line-good" x1="50" y1="272" x2="500" y2="272"/>
-        <text class="t-good" x="496" y="256" text-anchor="end">WP Bundle Migrator: about 12 MB, flat</text>
+        <text class="t-good" x="496" y="256" text-anchor="end">Slice Backup: about 12 MB, flat</text>
         <g class="ticks">
           <text x="50" y="312" text-anchor="middle">1 GB</text>
           <text x="275" y="312" text-anchor="middle">10 GB</text>
@@ -181,15 +181,15 @@ wp bundle delete backup.bundle.zip</code></pre>
   <div class="wrap">
     <h2>Get started in four steps</h2>
     <ol class="steps">
-      <li><span>Download the <code>.zip</code> from the <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">latest release</a>.</span></li>
-      <li><span>Upload and activate it in WordPress, then open <strong>Tools &gt; WP Bundle Migrator</strong>.</span></li>
+      <li><span>Download the <a href="https://github.com/gj437264-hash/slice-backup/archive/refs/heads/main.zip">plugin <code>.zip</code></a> from GitHub.</span></li>
+      <li><span>Upload and activate it in WordPress, then open <strong>Tools &gt; Slice Backup</strong>.</span></li>
       <li><span>Export the site, then import the archive on a fresh WordPress install with a different URL.</span></li>
-      <li><span>Hit a bug, memory spike or failed restore? Report it in <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">GitHub Issues</a> with your PHP version and host.</span></li>
+      <li><span>Hit a bug, memory spike or failed restore? Report it in <a href="https://github.com/gj437264-hash/slice-backup/issues">GitHub Issues</a> with your PHP version and host.</span></li>
     </ol>
     <div class="notice" role="note"><strong>Good practice:</strong> keep a separate backup of any site before you migrate or restore, and try a new setup on staging first.</div>
     <div class="cta-band">
       <h3>Ready to move your site?</h3>
-      <a class="btn btn-light" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
+      <a class="btn btn-light" href="https://github.com/gj437264-hash/slice-backup/archive/refs/heads/main.zip">Download plugin (.zip)</a>
     </div>
   </div>
 </section>
@@ -198,8 +198,8 @@ wp bundle delete backup.bundle.zip</code></pre>
 
 <footer class="footer">
   <div class="wrap foot-row">
-    <p>WP Bundle Migrator is open source, released under GPL v2 or later.</p>
-    <p><a href="https://github.com/gj437264-hash/wp-bundle-migrator-main">Source</a> <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">Issues</a> <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases">Releases</a></p>
+    <p>Slice Backup is open source, released under GPL v2 or later.</p>
+    <p><a href="https://github.com/gj437264-hash/slice-backup">Source</a> <a href="https://github.com/gj437264-hash/slice-backup/issues">Issues</a> <a href="https://github.com/gj437264-hash/slice-backup/releases">Releases</a></p>
   </div>
 </footer>
 
