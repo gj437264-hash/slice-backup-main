@@ -1,18 +1,207 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WordPress Migration Plugin Architect</title>
-    <meta name="description" content="Production-grade WordPress migration engine: Full lifecycle through Phase 6 Security Audit &amp; Production Hardening (PHPStan Level 8, WPCS compliance, threat modeling, developer hooks API, and release packaging)." />
-    <meta property="og:title" content="WordPress Migration Plugin Architect" />
-    <meta property="og:description" content="Production-grade WordPress migration engine: Full lifecycle through Phase 6 Security Audit &amp; Production Hardening (PHPStan Level 8, WPCS compliance, threat modeling, developer hooks API, and release packaging)." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WP Bundle Migrator: WordPress Backup, Restore and Migration Plugin</title>
+  <meta name="description" content="Free, open-source WordPress backup, restore and migration plugin. Streams data in 2 MB slices so large sites move without memory errors, with safe URL replacement, resumable downloads, cloud storage, scheduled backups and encryption.">
+  <meta property="og:title" content="WP Bundle Migrator: WordPress backup and migration without memory errors">
+  <meta property="og:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="WP Bundle Migrator">
+  <meta name="twitter:description" content="Open-source WordPress backup and migration with flat memory use, safe URL replacement and resumable downloads.">
+  <meta name="theme-color" content="#2f5bea">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232F5BEA'/><path d='M22 40h56M22 60h56' stroke='white' stroke-width='9' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "WP Bundle Migrator",
+    "description": "Open-source WordPress backup, restore and migration plugin that streams data in 2 MB slices.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "WordPress 5.8 to 6.7, PHP 7.4 to 8.4",
+    "license": "https://www.gnu.org/licenses/gpl-2.0.html",
+    "isAccessibleForFree": true,
+    "downloadUrl": "https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest"
+  }
+  </script>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-mem" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol><symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol><symbol id="i-net" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5H5v5M12 11.5h7v5"/></symbol><symbol id="i-redo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 11a3.5 3.5 0 0 1-.5 7z"/></symbol><symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol><symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol></svg>
 
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">WP Bundle Migrator</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#problems">Why it works</a>
+      <a href="#features">Features</a>
+      <a href="#modules">Modules</a>
+      <a href="#cli">WP-CLI</a>
+      <a href="#get-started">Get started</a>
+      <a class="nav-gh" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Back up and move big WordPress sites without hitting the memory limit</h1>
+      <p class="lead">WP Bundle Migrator backs up, restores and migrates WordPress by streaming everything in small slices. Memory use stays flat whether the site is 50 MB or 100 GB.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
+        <a class="btn btn-ghost" href="https://github.com/gj437264-hash/wp-bundle-migrator-main">View on GitHub</a>
+      </div>
+    </div>
+
+    <figure class="chart" aria-labelledby="chart-cap">
+      <svg viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Chart: a typical plugin’s PHP memory climbs with site size until it hits the memory limit and crashes, while WP Bundle Migrator stays flat at about 12 MB.">
+        <g class="grid">
+          <line x1="50" y1="30" x2="50" y2="290"/>
+          <line x1="50" y1="290" x2="500" y2="290"/>
+        </g>
+        <line class="limit" x1="50" y1="70" x2="500" y2="70"/>
+        <text class="t-limit" x="496" y="58" text-anchor="end">PHP memory_limit</text>
+        <path class="line-bad" d="M50 280 C150 270 250 150 330 70"/>
+        <circle class="crash" cx="330" cy="70" r="6"/>
+        <text class="t-bad" x="318" y="108" text-anchor="end">Buffers data in memory:</text>
+        <text class="t-bad" x="318" y="124" text-anchor="end">“Allowed memory size exhausted”</text>
+        <line class="line-good" x1="50" y1="272" x2="500" y2="272"/>
+        <text class="t-good" x="496" y="256" text-anchor="end">WP Bundle Migrator: about 12 MB, flat</text>
+        <g class="ticks">
+          <text x="50" y="312" text-anchor="middle">1 GB</text>
+          <text x="275" y="312" text-anchor="middle">10 GB</text>
+          <text x="500" y="312" text-anchor="middle">100 GB</text>
+          <text x="275" y="332" text-anchor="middle" class="axis">Site size</text>
+          <text x="18" y="160" text-anchor="middle" class="axis" transform="rotate(-90 18 160)">PHP memory used</text>
+        </g>
+      </svg>
+      <figcaption id="chart-cap">Illustration of the design goal. The flat figure is the project’s measured footprint.</figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap">
+    <ul class="facts">
+      <li><strong>2 MB</strong> streaming slices</li>
+      <li><strong>About 12 MB</strong> flat memory use</li>
+      <li><strong>WordPress 5.8 to 6.7</strong></li>
+      <li><strong>PHP 7.4 to 8.4</strong></li>
+      <li><strong>GPL v2 or later</strong> free and open source</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="problems">
+  <div class="wrap">
+    <h2>Built around the four things that break migrations</h2>
+    <p class="section-lead">Most failures come from the same few causes. Each one is handled in the design, not patched afterward.</p>
+    <div class="pf-grid">
+<article class="pf"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mem"/></svg></span><h3>The server runs out of memory</h3></div>
+<p class="pf-box pf-bad"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg><span><strong>The problem.</strong> Plugins that load a whole archive or table into RAM crash on shared hosting.</span></p>
+<p class="pf-box pf-good"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ok"/></svg><span><strong>Streams in 2 MB slices.</strong> Files and database rows move through file handles and HTTP sockets in fixed-size pieces, so memory use does not grow with the site.</span></p></article>
+<article class="pf"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg></span><h3>Changing the domain corrupts data</h3></div>
+<p class="pf-box pf-bad"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg><span><strong>The problem.</strong> Plain search-and-replace breaks serialized PHP strings, and unserializing them to fix it can run attacker-supplied code.</span></p>
+<p class="pf-box pf-good"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ok"/></svg><span><strong>Rewrites URLs without <code>unserialize()</code>.</strong> A tokenizer recalculates string lengths, including multi-byte UTF-8 and emoji, and never executes site data. This closes the object injection risk (CWE-502).</span></p></article>
+<article class="pf"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>The new server has a newer PHP</h3></div>
+<p class="pf-box pf-bad"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg><span><strong>The problem.</strong> Moving from PHP 7.4 to 8.2 or later can crash the site on old plugin code.</span></p>
+<p class="pf-box pf-good"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ok"/></svg><span><strong>Checks plugins before the site boots.</strong> The compatibility inspector scans plugin code against the destination’s PHP version, deactivates any plugin with fatal syntax in the database, keeps its files, and writes a conflict report. You get a working site and a list of what to fix.</span></p></article>
+<article class="pf"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-dl"/></svg></span><h3>Timeouts and half-finished downloads</h3></div>
+<p class="pf-box pf-bad"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg><span><strong>The problem.</strong> Gateways cut long requests, and big downloads fail with “File incomplete”.</span></p>
+<p class="pf-box pf-good"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ok"/></svg><span><strong>Resumable downloads with HTTP Range.</strong> Archives of 5 GB and more can be paused, resumed or fetched with a download manager, and output buffers are cleared so the server does not run out of memory while sending.</span></p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="features">
+  <div class="wrap">
+    <h2>Everything else you need for a safe move</h2>
+    <div class="bento">
+<article class="b b-wide"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-net"/></svg></span><h3>Multisite support</h3></div><p>Migrate a whole network, or pull one subsite out as a standalone install with table prefixes rewritten for you (<code>wp_3_</code> becomes <code>wp_</code>).</p><p class="swap"><code>wp_3_posts</code><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg><code class="ok">wp_posts</code></p></article>
+<article class="b "><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-redo"/></svg></span><h3>Restores that keep going</h3></div><p>If an archive has a damaged entry, the extractor logs a warning, skips it, and restores everything else.</p></article>
+<article class="b "><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Hardened extraction</h3></div><p>Every path is checked against a canonical jail on Linux and Windows, which blocks Zip Slip (CWE-22).</p></article>
+<article class="b b-wide"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-layers"/></svg></span><h3>Flexible export scopes</h3></div><p>Standard migration, complete turnkey clone with WordPress core, database only, media only, or a granular selection.</p><ul class="chips"><li>Standard migration</li><li>Turnkey clone</li><li>Database only</li><li>Media only</li><li>Granular selection</li></ul></article>
+<article class="b b-half"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-code"/></svg></span><h3>Hooks for developers</h3></div><p>Tune the database chunk size with the <code>wp_bundle_migrator_chunk_size</code> filter, or run your own code after a restore with the <code>wp_bundle_migrator_after_restore</code> action.</p></article>
+<article class="b b-half"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trash"/></svg></span><h3>Clean uninstall</h3></div><p>Deleting the plugin removes its settings, options and temporary migration folders.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="modules">
+  <div class="wrap">
+    <h2>Cloud storage, scheduling, transfer and encryption, built in</h2>
+    <p class="section-lead">These modules are part of the core plugin, so there are no add-on ZIPs to install or keep in step with updates.</p>
+    <div class="mod-grid">
+<article class="mod"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cloud"/></svg></span><h3>Cloud storage</h3></div><p>Send backups straight to S3-compatible storage (Amazon S3, Cloudflare R2, Google Cloud, Wasabi, MinIO), Dropbox, OneDrive or SFTP. You bring your own storage credentials.</p><p class="detail">A small built-in SigV4 signer replaces the AWS SDK, and multipart uploads keep memory low.</p><ul class="chips"><li>Amazon S3</li><li>Cloudflare R2</li><li>Google Cloud</li><li>Wasabi</li><li>MinIO</li><li>Dropbox</li><li>OneDrive</li><li>SFTP</li></ul></article>
+<article class="mod"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg></span><h3>Scheduled backups</h3></div><p>Automatic backups with grandfather-father-son retention: 7 daily, 4 weekly and 12 monthly copies. A disk quota limit stops backups from filling the host.</p><p class="detail">Runs on Action Scheduler, prunes old local and cloud copies, and sends Slack, Discord or email alerts.</p><ul class="chips"><li>7 daily</li><li>4 weekly</li><li>12 monthly</li></ul></article>
+<article class="mod"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-swap"/></svg></span><h3>Server-to-server transfer</h3></div><p>Pair two sites with a one-time 32-character token and move the site directly between them, without downloading a large archive to your computer.</p><p class="detail">Data streams in chunks over an encrypted REST connection, and the domain is rewritten on arrival.</p><ul class="chips"><li>One-time token</li><li>Encrypted REST</li><li>Domain rewritten on arrival</li></ul></article>
+<article class="mod"><div class="pf-head"><span class="tile"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Encrypted archives</h3></div><p>Protect backups with AES-256-GCM. The authentication tag detects any change to an archive, so a tampered file fails to restore instead of loading.</p><p class="detail">Keys come from your passphrase through PBKDF2 with 100,000 iterations, using PHP’s built-in OpenSSL.</p><ul class="chips"><li>AES-256-GCM</li><li>PBKDF2, 100,000 iterations</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="cli">
+  <div class="wrap cli-grid">
+    <div>
+      <h2>Automate it with WP-CLI</h2>
+      <p class="section-lead">Run exports and restores from a terminal, a CI job or a headless server. Replace the domain during import in the same command.</p>
+    </div>
+    <div class="term" role="group" aria-label="WP-CLI examples">
+      <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+<pre tabindex="0"><code><span class="c"># Export the whole site</span>
+wp bundle export --scope=full
+
+<span class="c"># Turnkey clone with WordPress core and database</span>
+wp bundle export --scope=turnkey_full --output=/var/backups/site-clone.zip
+
+<span class="c"># Pull subsite #3 out of a network as a standalone site</span>
+wp bundle export --multisite-mode=subsite --subsite-id=3 --convert-standalone
+
+<span class="c"># Export the database only</span>
+wp bundle export --scope=db_only
+
+<span class="c"># Restore and swap the domain</span>
+wp bundle import backup.bundle.zip \
+  --old-url="https://dev.local" \
+  --new-url="https://production.com"
+
+<span class="c"># List and delete archives in the local vault</span>
+wp bundle list
+wp bundle delete backup.bundle.zip</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="get-started">
+  <div class="wrap">
+    <h2>Get started in four steps</h2>
+    <ol class="steps">
+      <li><span>Download the <code>.zip</code> from the <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">latest release</a>.</span></li>
+      <li><span>Upload and activate it in WordPress, then open <strong>Tools &gt; WP Bundle Migrator</strong>.</span></li>
+      <li><span>Export the site, then import the archive on a fresh WordPress install with a different URL.</span></li>
+      <li><span>Hit a bug, memory spike or failed restore? Report it in <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">GitHub Issues</a> with your PHP version and host.</span></li>
+    </ol>
+    <div class="notice" role="note"><strong>Good practice:</strong> keep a separate backup of any site before you migrate or restore, and try a new setup on staging first.</div>
+    <div class="cta-band">
+      <h3>Ready to move your site?</h3>
+      <a class="btn btn-light" href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases/latest">Download latest release</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <p>WP Bundle Migrator is open source, released under GPL v2 or later.</p>
+    <p><a href="https://github.com/gj437264-hash/wp-bundle-migrator-main">Source</a> <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/issues">Issues</a> <a href="https://github.com/gj437264-hash/wp-bundle-migrator-main/releases">Releases</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
