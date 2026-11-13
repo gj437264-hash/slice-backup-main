@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Changelog — Slice Backup</title>
+  <meta name="description" content="Version history for Slice Backup, the open-source WordPress backup, restore and migration plugin.">
+  <meta name="theme-color" content="#2f5bea">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232F5BEA'/><path d='M22 40h56M22 60h56' stroke='white' stroke-width='9' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"></svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">Slice Backup</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="index.html#problems">Why it works</a>
+      <a href="index.html#features">Features</a>
+      <a href="docs.html">Docs</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html" class="active">Changelog</a>
+      <a class="nav-gh" href="https://github.com/gj437264-hash/slice-backup">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap page-head">
+  <span class="eyebrow">Changelog</span>
+  <h1>Version history</h1>
+  <p>See the full commit history on <a href="https://github.com/gj437264-hash/slice-backup/releases">GitHub Releases</a>.</p>
+</div>
+
+<div class="wrap section" style="max-width:820px;">
+
+  <div class="changelog-entry">
+    <h3>1.1.0 <span class="ver-date">Current release</span></h3>
+    <ul>
+      <li>Imports can now be fetched directly from a public Google Drive, OneDrive/SharePoint or Dropbox share link, without downloading the bundle locally first.</li>
+      <li>Restores now stage the database and plugin/theme files and switch them in atomically, keeping a safety copy: a restore can be undone, or its safety copy discarded, from the Restore tab or <code>wp slice-backup rollback</code>.</li>
+      <li>Conflicting plugins are deactivated and a conflicting theme falls back to an installed default theme (or downloads one) automatically, so a restore keeps going instead of leaving a broken site.</li>
+      <li>A crashed step (out of memory, a host time limit) is now detected and retried in smaller pieces instead of repeating indefinitely; database export and search-replace batches are sized by memory rather than row count.</li>
+      <li>Every restore now produces a detailed, downloadable report of what happened and any follow-up action needed.</li>
+    </ul>
+  </div>
+
+  <div class="changelog-entry is-beta">
+    <h3>1.0.0-beta <span class="ver-date">First public beta release</span></h3>
+    <p>Initial feature set:</p>
+    <ul>
+      <li>Resumable backups and restores</li>
+      <li>AES-256-GCM encryption</li>
+      <li>S3-compatible cloud storage</li>
+      <li>SFTP support</li>
+      <li>Dropbox support</li>
+      <li>Site-to-site push and pull</li>
+      <li>Scheduled backups</li>
+      <li>Grandfather-Father-Son retention</li>
+      <li>Serialization-safe URL replacement</li>
+      <li>PHP compatibility checks</li>
+      <li>WP-CLI integration</li>
+      <li>REST API</li>
+      <li>Multisite migration support</li>
+      <li>Security-focused backup and transfer workflows</li>
+    </ul>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <p>Slice Backup is open source, released under GPL v2 or later.</p>
+    <p><a href="index.html">Home</a><a href="docs.html">Documentation</a><a href="faq.html">FAQ</a><a href="https://github.com/gj437264-hash/slice-backup">Source</a><a href="https://github.com/gj437264-hash/slice-backup/issues">Issues</a></p>
+  </div>
+</footer>
+</body>
+</html>

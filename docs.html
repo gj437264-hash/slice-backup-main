@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation — Slice Backup</title>
+  <meta name="description" content="Full documentation for Slice Backup: installation, creating backups, restoring and migrating, rollback, cloud storage setup, scheduling, site-to-site transfer, encryption, WP-CLI, REST API, hooks and security.">
+  <meta name="theme-color" content="#2f5bea">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232F5BEA'/><path d='M22 40h56M22 60h56' stroke='white' stroke-width='9' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+<symbol id="i-mem" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">Slice Backup</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="index.html#problems">Why it works</a>
+      <a href="index.html#features">Features</a>
+      <a href="docs.html" class="active">Docs</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html">Changelog</a>
+      <a class="nav-gh" href="https://github.com/gj437264-hash/slice-backup">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap page-head">
+  <span class="eyebrow">Documentation</span>
+  <h1>Everything about running Slice Backup</h1>
+  <p>Installation, the admin screens, WP-CLI commands, the REST API, developer hooks and the security model &mdash; all in one place. This reflects <strong>version 1.1.0</strong>.</p>
+</div>
+
+<div class="wrap docs-layout">
+  <aside class="docs-toc">
+    <nav aria-label="Documentation sections">
+      <a href="#getting-started">Getting started</a>
+      <a href="#backups">Creating a backup</a>
+      <a href="#restoring">Restoring &amp; migrating</a>
+      <a href="#rollback">Rollback &amp; safety copy</a>
+      <a href="#link-import">Import from a share link</a>
+      <a href="#multisite">Multisite</a>
+      <a href="#cloud-storage">Cloud storage</a>
+      <a class="toc-h3" href="#cloud-s3">S3-compatible</a>
+      <a class="toc-h3" href="#cloud-sftp">SFTP</a>
+      <a class="toc-h3" href="#cloud-dropbox">Dropbox</a>
+      <a href="#scheduling">Scheduling &amp; retention</a>
+      <a href="#transfer">Site-to-site transfer</a>
+      <a href="#encryption">Encryption</a>
+      <a href="#wp-cli">WP-CLI reference</a>
+      <a href="#rest-api">REST API</a>
+      <a href="#hooks">Hooks &amp; filters</a>
+      <a href="#security">Security</a>
+      <a href="#uninstall">Uninstalling</a>
+    </nav>
+  </aside>
+
+  <div class="docs-content">
+
+<section id="getting-started">
+  <h2>Getting started</h2>
+  <p>Slice Backup requires <strong>WordPress 6.2+</strong> (tested to 7.1) and <strong>PHP 7.4+</strong>. It is a single plugin with no required add-ons.</p>
+  <h3>Install</h3>
+  <ol>
+    <li>Download the <a href="https://github.com/gj437264-hash/slice-backup/archive/refs/heads/main.zip">plugin .zip</a>, or install it from <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>.</li>
+    <li>Activate it. On Multisite, <strong>network-activate</strong> it instead.</li>
+    <li>Open <strong>Tools &gt; Slice Backup</strong> (on Multisite: <strong>Network Admin &gt; Slice Backup</strong>).</li>
+  </ol>
+  <div class="callout callout-info"><strong>Who can use it.</strong> Only administrators can open Slice Backup. On Multisite, only Super Administrators can &mdash; every action is also capability-checked and nonce-verified on the backend, so hiding the menu is not the only line of defense.</div>
+  <h3>Moving a whole site</h3>
+  <ol>
+    <li>Create a backup on the existing site.</li>
+    <li>Install WordPress (and Slice Backup) on the destination server.</li>
+    <li>Upload the backup bundle, or select it from configured cloud storage, pull it from the source site, or paste a share link.</li>
+    <li>Restore it, replacing the old URL with the new one.</li>
+  </ol>
+</section>
+
+<section id="backups">
+  <h2>Creating a backup</h2>
+  <p>Choose what to include before you export:</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Scope</th><th>What it includes</th></tr></thead>
+    <tbody>
+      <tr><td>Full site</td><td>Database, uploads, plugins, themes, must-use plugins, languages and root files.</td></tr>
+      <tr><td>Turnkey clone</td><td>Everything in Full site, plus WordPress core itself &mdash; useful for a one-file disaster-recovery copy.</td></tr>
+      <tr><td>Database only</td><td>Just the database tables.</td></tr>
+      <tr><td>Media only</td><td>Just the uploads folder.</td></tr>
+      <tr><td>Custom</td><td>Pick any combination of: <code>db</code>, <code>uploads</code>, <code>plugins</code>, <code>themes</code>, <code>mu_plugins</code>, <code>languages</code>, <code>root_files</code>, <code>wp_core</code>.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Optional export filters: skip spam/trashed comments, skip post revisions and trashed posts, and skip cached transients, which reduces archive size without losing real content. A live size estimate is shown before you start.</p>
+  <p>Every export can also be <a href="#encryption">encrypted</a>, uploaded straight to your <a href="#cloud-storage">cloud storage</a>, or <a href="#transfer">pushed to another site</a> in the same step.</p>
+  <h3>Resumable by design</h3>
+  <p>Backups run as background jobs made of short steps (20 seconds by default). Each step saves its position before it ends, and the next step &mdash; triggered by the open admin page, a WordPress loopback request, or WP-Cron &mdash; continues from there. You can close the browser without cancelling the job, and a host time limit interrupts a step rather than the whole backup.</p>
+  <div class="callout callout-warn"><strong>Low-traffic sites.</strong> WP-Cron is normally triggered by site visits. If your site gets little traffic, point a real server cron job at <code>wp-cron.php</code> (for example every 5 minutes) so scheduled steps and scheduled backups keep running. The System tab warns when a scheduled backup is late.</div>
+</section>
+
+<section id="restoring">
+  <h2>Restoring &amp; migrating</h2>
+  <p>Upload a bundle (in chunked, resumable pieces, so size isn't limited by your browser or PHP's upload limits), pick it from cloud storage, pull it from another site, or paste a share link &mdash; then choose which components to restore.</p>
+  <h3>Domain replacement</h3>
+  <p>Slice Backup replaces the old URL with the new one across text columns in the database <strong>without calling <code>unserialize()</code></strong>. A tokenizer recalculates serialized string lengths (including multi-byte UTF-8 and emoji) so serialized PHP arrays and objects stay valid, and it handles both JSON-escaped and plain, <code>http://</code> and <code>https://</code> URLs. This avoids the PHP object-injection risk (CWE-502) that comes with unserializing untrusted data.</p>
+  <h3>Table prefix differences</h3>
+  <p>If the backup's table prefix differs from the destination's (for example restoring a multisite subsite as a standalone install), the prefix is rewritten automatically during restore.</p>
+  <h3>PHP compatibility protection</h3>
+  <p>Before activating anything, Slice Backup checks the destination's PHP version against the plugins and theme in the bundle:</p>
+  <ul>
+    <li>A plugin that would crash on this PHP version is <strong>deactivated</strong> in the database (its files are kept, so you can decide what to do with it later).</li>
+    <li>An incompatible active theme <strong>falls back</strong> to an installed default theme (or downloads one) instead of leaving the site unthemed.</li>
+    <li>Everything that was changed is listed in the restore report.</li>
+  </ul>
+  <p>This is why a restore to a server with a different PHP version typically still leaves you with a working, logged-out-but-browsable site instead of a fatal error.</p>
+  <h3>Damaged archives</h3>
+  <p>If an archive entry can't be read, extraction logs a warning, skips that entry, and restoration continues with everything else instead of aborting the whole restore.</p>
+  <div class="callout callout-info"><strong>You'll likely be logged out.</strong> A database restore replaces users and session data, so existing sessions usually become invalid. Log back in with an account from the restored site once the job finishes &mdash; the restore itself keeps running in the background regardless.</div>
+</section>
+
+<section id="rollback">
+  <h2>Rollback &amp; safety copy <span class="pill">New in 1.1.0</span></h2>
+  <p>Restores are now atomic: the new database and plugin/theme files are staged first, then switched in, while a safety copy of what was there before is kept on disk.</p>
+  <ul>
+    <li>If a step crashes partway (out of memory, a host time limit), it's detected and retried in smaller pieces instead of repeating indefinitely or leaving a half-applied restore.</li>
+    <li>After a restore finishes, you can <strong>undo it</strong> from the Restore tab, or discard the safety copy once you're confident the restore is good.</li>
+    <li>Every restore produces a detailed, downloadable report of what happened and any follow-up action needed (for example, plugins that were deactivated).</li>
+  </ul>
+  <p>From WP-CLI:</p>
+  <pre><code>wp slice-backup rollback          <span class="c"># shows safety-copy status</span>
+wp slice-backup rollback undo     <span class="c"># puts the database, plugins and themes back</span>
+wp slice-backup rollback discard  <span class="c"># deletes the safety copy</span></code></pre>
+</section>
+
+<section id="link-import">
+  <h2>Import from a share link <span class="pill">New in 1.1.0</span></h2>
+  <p>You can fetch a bundle directly into the backup folder from a publicly-shared link, without downloading it to your computer first. Supported sources:</p>
+  <ul>
+    <li>Google Drive (<code>drive.google.com</code>, <code>docs.google.com</code>)</li>
+    <li>OneDrive / SharePoint (<code>1drv.ms</code>, <code>onedrive.live.com</code>, <code>*.sharepoint.com</code>)</li>
+    <li>Dropbox share links</li>
+    <li>Any other direct download URL</li>
+  </ul>
+  <p>The link must have open ("anyone with the link") access. From WP-CLI:</p>
+  <pre><code>wp slice-backup fetch-link "https://drive.google.com/file/d/XXXX/view?usp=sharing"</code></pre>
+  <p>The same option is available from the Restore screen in wp-admin.</p>
+</section>
+
+<section id="multisite">
+  <h2>Multisite</h2>
+  <p>A WordPress Multisite installation can be restored as:</p>
+  <ul>
+    <li><strong>An entire network</strong> &mdash; every site in the network, restored as-is.</li>
+    <li><strong>A single site, converted to standalone</strong> &mdash; pull one subsite out of the network and turn it into its own single-site WordPress install, with its table prefix rewritten (for example <code>wp_3_posts</code> &rarr; <code>wp_posts</code>).</li>
+  </ul>
+  <pre><code><span class="c"># Export subsite #3 as a standalone bundle</span>
+wp slice-backup export --subsite=3 --standalone</code></pre>
+</section>
+
+<section id="cloud-storage">
+  <h2>Cloud storage</h2>
+  <p>Slice Backup works with storage you already have an account with &mdash; there's no proprietary Slice Backup cloud, license key, or storage resale. The settings screen links to each provider's signup, pricing and key-creation pages, and a <strong>Test Connection</strong> button writes, lists and then deletes a test file so you know access actually works before you rely on it. Large bundles upload in resumable, multi-part pieces.</p>
+
+  <h3 id="cloud-s3">S3-compatible storage</h3>
+  <p>Amazon S3, Cloudflare R2, Google Cloud Storage (via HMAC keys), Wasabi, Backblaze B2, DigitalOcean Spaces, MinIO, and other S3-compatible endpoints. A small built-in SigV4 signer talks to the API directly, so no AWS SDK is bundled.</p>
+
+  <h3 id="cloud-sftp">SFTP / SSH servers</h3>
+  <p>Password authentication, or private-key authentication with OpenSSH or PEM keys (including passphrase-protected keys). The server's host-key fingerprint is pinned on first connection; if it ever changes, the connection is refused rather than silently trusted, which protects against man-in-the-middle attacks.</p>
+
+  <h3 id="cloud-dropbox">Dropbox</h3>
+  <p>Connects to your own Dropbox application using OAuth 2 with PKCE &mdash; no app secret is stored, only an encrypted refresh token. Files are written to that application's App folder, not your whole Dropbox. Setup steps are shown directly on the settings screen.</p>
+</section>
+
+<section id="scheduling">
+  <h2>Scheduling &amp; retention</h2>
+  <p>Automate backups on a recurring interval &mdash; every 12 hours, daily, weekly, or monthly &mdash; at a time you choose in your site's own timezone. A schedule can also:</p>
+  <ul>
+    <li>Encrypt the backup and/or upload it to your configured cloud storage automatically.</li>
+    <li>Delete the local copy once the cloud upload succeeds.</li>
+    <li>Email you after every run, or only on failure.</li>
+    <li>POST a JSON summary to a webhook &mdash; Slack, Discord, Zapier, or anything that accepts a POST (sent with <code>wp_safe_remote_post()</code>, which blocks requests to internal/private addresses).</li>
+  </ul>
+  <p>Use <strong>Run scheduled backup now</strong> to test a schedule's settings without waiting for the timer.</p>
+  <h3>Grandfather-Father-Son retention</h3>
+  <p>Configure how many of the newest backups to keep for each of the last <strong>N days</strong>, <strong>N weeks</strong>, and <strong>N months</strong>; older ones are pruned automatically, locally and in cloud storage. Manual backups are never touched by this rule &mdash; only backups the schedule itself created.</p>
+</section>
+
+<section id="transfer">
+  <h2>Site-to-site transfer</h2>
+  <p>Move a backup directly between two WordPress sites without downloading the archive to your computer.</p>
+  <h3>Push (from the source site)</h3>
+  <ol>
+    <li>On the <strong>receiving</strong> site, go to <strong>Settings &rarr; Site-to-site Transfer</strong> and create a transfer key, valid for 1 hour to 7 days.</li>
+    <li>On the <strong>source</strong> site, enable <strong>Send directly to another site</strong> and enter that key.</li>
+    <li>Optionally, have it restore automatically on the destination once the transfer completes.</li>
+  </ol>
+  <h3>Pull (from the destination site)</h3>
+  <ol>
+    <li>Go to <strong>Restore &rarr; From another site</strong>.</li>
+    <li>Enter the source site's transfer key and start the transfer.</li>
+  </ol>
+  <p>Every request is authenticated with <strong>HMAC-SHA256</strong> computed over the HTTP method, route, body, a timestamp and a single-use nonce; old, replayed, modified or unsigned requests are rejected. Transfer keys can be revoked at any time.</p>
+  <pre><code><span class="c"># From WP-CLI, pull a bundle using a key created on the other site</span>
+wp slice-backup pull slicebk1.eyJ1Ijoi...
+
+<span class="c"># Or push while exporting, and restore it on arrival</span>
+wp slice-backup export --push=slicebk1.eyJ1Ijoi... --push-restore</code></pre>
+</section>
+
+<section id="encryption">
+  <h2>Encryption</h2>
+  <p>Backups can be protected with <strong>AES-256-GCM</strong>. The encryption key is derived from your passphrase with <strong>PBKDF2-SHA256, 310,000 iterations</strong>, and every <strong>1&nbsp;MB chunk</strong> of the archive is authenticated &mdash; so a modified, reordered, or truncated backup fails to restore instead of silently loading corrupted data. Bundle metadata (source site URL, included components) is encrypted too, and only readable once the correct passphrase is entered.</p>
+  <p>Saved passphrases and cloud secret keys are themselves encrypted using your site's WordPress security keys (<code>AUTH_KEY</code> and friends) and are never stored in plain text. As an alternative to saving the passphrase in the database, define it in <code>wp-config.php</code>:</p>
+  <pre><code>define( 'SLICE_BACKUP_ENCRYPTION_PASSPHRASE', 'a long random passphrase' );</code></pre>
+  <div class="callout callout-danger"><strong>There is no recovery.</strong> If an encrypted backup's passphrase is lost, the backup cannot be decrypted by Slice Backup, its authors, or anyone else. Store the passphrase somewhere safe and separate from the backup itself.</div>
+</section>
+
+<section id="wp-cli">
+  <h2>WP-CLI reference</h2>
+  <p>Every command runs outside the web server's time limit, which makes WP-CLI the recommended way to back up or restore very large sites.</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Command</th><th>What it does</th><th>Common options</th></tr></thead>
+    <tbody>
+      <tr><td><code>wp slice-backup export</code></td><td>Creates a bundle.</td><td><code>--preset=&lt;full|turnkey_full|db_only|media_only&gt;</code>, <code>--components=&lt;list&gt;</code>, <code>--subsite=&lt;id&gt; --standalone</code>, <code>--exclude-spam</code>, <code>--exclude-revisions</code>, <code>--exclude-transients</code>, <code>--encrypt --passphrase=&lt;...&gt;</code>, <code>--upload</code>, <code>--push=&lt;key&gt; --push-restore</code></td></tr>
+      <tr><td><code>wp slice-backup import &lt;file&gt;</code></td><td>Restores a bundle into this site.</td><td><code>--restore=&lt;components&gt;</code> (default <code>db,uploads</code>), <code>--old-url=&lt;url&gt;</code>, <code>--new-url=&lt;url&gt;</code>, <code>--isolate</code> / <code>--no-isolate</code>, <code>--passphrase=&lt;...&gt;</code>, <code>--yes</code></td></tr>
+      <tr><td><code>wp slice-backup list</code></td><td>Lists stored bundles.</td><td><code>--format=&lt;table|json|csv&gt;</code></td></tr>
+      <tr><td><code>wp slice-backup delete &lt;file&gt;</code></td><td>Deletes a stored bundle.</td><td><code>--yes</code></td></tr>
+      <tr><td><code>wp slice-backup pull &lt;key&gt;</code></td><td>Fetches a bundle from another site's transfer key into this site's backup folder.</td><td><code>--preset=&lt;full|db_only|media_only&gt;</code></td></tr>
+      <tr><td><code>wp slice-backup fetch-link &lt;url&gt;</code></td><td>Imports a bundle straight from a public Google Drive, OneDrive/SharePoint or Dropbox share link.</td><td>&mdash;</td></tr>
+      <tr><td><code>wp slice-backup cloud-test</code></td><td>Tests the saved cloud storage settings.</td><td>&mdash;</td></tr>
+      <tr><td><code>wp slice-backup resume</code></td><td>Continues a backup/restore job that's still running (e.g. after its PHP process was killed), from its last saved position.</td><td><code>--cancel</code></td></tr>
+      <tr><td><code>wp slice-backup rollback [status|undo|discard]</code></td><td>Shows, undoes, or discards the safety copy kept from the last restore.</td><td><code>--yes</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="rest-api">
+  <h2>REST API</h2>
+  <p>Slice Backup exposes a REST API under <code>/wp-json/slice-backup/v1/</code> for headless automation. Authenticate with WordPress <strong>Application Passwords</strong> (or cookie + nonce from the admin context); every endpoint requires the same capability as the admin screen.</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>/export</code></td><td>POST</td><td>Start an export job.</td></tr>
+      <tr><td><code>/restore</code></td><td>POST</td><td>Start a restore job for an uploaded <code>filename</code>.</td></tr>
+      <tr><td><code>/backups</code></td><td>GET</td><td>List stored bundles.</td></tr>
+      <tr><td><code>/delete_backup</code></td><td>POST</td><td>Delete a stored bundle by <code>file</code>.</td></tr>
+      <tr><td><code>/settings</code></td><td>GET / POST</td><td>Read or save plugin settings.</td></tr>
+      <tr><td><code>/status</code></td><td>GET</td><td>Current job status/progress.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The <code>/peer/*</code> routes power site-to-site transfer. They're HMAC-signed with a transfer key rather than Application Passwords, and aren't meant to be called directly &mdash; use the <strong>Push/Pull</strong> UI or <code>wp slice-backup push</code>/<code>pull</code>/<code>export --push</code> instead.</p>
+</section>
+
+<section id="hooks">
+  <h2>Hooks &amp; filters</h2>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Hook</th><th>Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>slice_backup_required_capability</code></td><td>Filter</td><td>Changes the capability required to use Slice Backup (default: an administrator capability, or Super Admin on Multisite).</td></tr>
+      <tr><td><code>slice_backup_chunk_size</code></td><td>Filter</td><td>Controls the number of database rows read per query during export.</td></tr>
+      <tr><td><code>slice_backup_export_exclude_paths</code></td><td>Filter</td><td>Adds absolute paths to exclude from a component during export.</td></tr>
+      <tr><td><code>slice_backup_peer_sslverify</code></td><td>Filter</td><td>Controls TLS certificate verification for site-to-site requests. Default <code>true</code>.</td></tr>
+      <tr><td><code>slice_backup_before_export</code></td><td>Action</td><td>Fires before an export starts.</td></tr>
+      <tr><td><code>slice_backup_after_export</code></td><td>Action</td><td>Fires after an export finishes.</td></tr>
+      <tr><td><code>slice_backup_before_restore</code></td><td>Action</td><td>Fires before a restore starts.</td></tr>
+      <tr><td><code>slice_backup_after_restore</code></td><td>Action</td><td>Fires after a restore finishes.</td></tr>
+    </tbody>
+  </table></div>
+  <pre><code>add_filter( 'slice_backup_chunk_size', function ( $rows ) {
+    return 5000; // Read more rows per query on a beefier server.
+} );
+
+add_action( 'slice_backup_after_restore', function () {
+    // Flush an object cache, warm a CDN, notify a deploy hook, etc.
+} );</code></pre>
+</section>
+
+<section id="security">
+  <h2>Security</h2>
+  <h3>Access control</h3>
+  <ul>
+    <li>Only administrators (Super Administrators on Multisite) can use Slice Backup.</li>
+    <li>Every request is capability-checked; applicable requests are nonce-verified.</li>
+    <li>Background processing steps are authorized with a random per-job token.</li>
+  </ul>
+  <h3>Backup file protection</h3>
+  <ul>
+    <li>Bundles get long, random filenames.</li>
+    <li>The temporary backup directory (<code>wp-content/uploads/slice-backup-temp/</code>) is blocked from direct web access on supported Apache and IIS configurations.</li>
+    <li>The System tab tests whether bundles can be downloaded directly over the web, and gives you the rule to add for servers (like Nginx) it can't configure automatically.</li>
+  </ul>
+  <h3>Archive security</h3>
+  <ul>
+    <li>Archives are checked for path traversal / Zip Slip before extraction, on both Linux and Windows path conventions.</li>
+    <li>A <code>wp-config.php</code> found inside a bundle is never applied during restore.</li>
+  </ul>
+  <h3>Does Slice Backup send data anywhere?</h3>
+  <p>Only to destinations you explicitly configure: your own cloud storage, your SFTP server, your Dropbox app, another WordPress site you created a transfer key for, your notification email address, or your webhook URL. <strong>Slice Backup never sends backup data to its authors.</strong></p>
+</section>
+
+<section id="uninstall">
+  <h2>Uninstalling</h2>
+  <p>Deleting the plugin removes its settings, scheduled tasks, and temporary files. <strong>Backup bundles are kept by default</strong>, and cloud backups are never deleted automatically. To also delete local bundles on uninstall, add this to <code>wp-config.php</code> before deleting the plugin:</p>
+  <pre><code>define( 'SLICE_BACKUP_DELETE_BUNDLES_ON_UNINSTALL', true );</code></pre>
+</section>
+
+  </div>
+</div>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <p>Slice Backup is open source, released under GPL v2 or later.</p>
+    <p><a href="index.html">Home</a><a href="faq.html">FAQ</a><a href="changelog.html">Changelog</a><a href="https://github.com/gj437264-hash/slice-backup">Source</a><a href="https://github.com/gj437264-hash/slice-backup/issues">Issues</a></p>
+  </div>
+</footer>
+</body>
+</html>
